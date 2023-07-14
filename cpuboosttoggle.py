@@ -1,5 +1,6 @@
 import os
 import psutil
+import time
 import win32com.client
 
 #find the active scheme
@@ -27,26 +28,32 @@ dc_boost_disabled = dc_state == "0x00000000"
 battery_status = psutil.sensors_battery()
 
 #set the power state
-if battery_status.power_plugged:
-    print("ROG ALLY is plugged in")
-    if ac_boost_disabled:
-        print("Enabling CPU Boost")
-        os.system('powercfg.exe /SETACVALUEINDEX ' + active_scheme + s1 + s2 + ' 002')
-        ac_boost_disabled = False
+try:
+    if battery_status.power_plugged:
+        print("ROG ALLY is plugged in")
+        if ac_boost_disabled:
+            print("Enabling CPU Boost")
+            os.system('powercfg.exe /SETACVALUEINDEX ' + active_scheme + s1 + s2 + ' 002')
+            ac_boost_disabled = False
+        else:
+            print("Disabling CPU Boost")
+            os.system('powercfg.exe /SETACVALUEINDEX ' + active_scheme + s1 + s2 + ' 000')
+            ac_boost_disabled = True
     else:
-        print("Disabling CPU Boost")
-        os.system('powercfg.exe /SETACVALUEINDEX ' + active_scheme + s1 + s2 + ' 000')
-        ac_boost_disabled = True
-else:
-    print("ROG ALLY is running on battery")
-    if dc_boost_disabled:
-        print("Enabling CPU Boost")
-        os.system('powercfg.exe /SETDCVALUEINDEX ' + active_scheme + s1 + s2 + ' 002')
-        dc_boost_disabled = False
-    else:
-        print("Disabling CPU Boost")
-        os.system('powercfg.exe /SETDCVALUEINDEX ' + active_scheme + s1 + s2 + ' 000')
-        dc_boost_disabled = True
+        print("ROG ALLY is running on battery")
+        if dc_boost_disabled:
+            print("Enabling CPU Boost")
+            os.system('powercfg.exe /SETDCVALUEINDEX ' + active_scheme + s1 + s2 + ' 002')
+            dc_boost_disabled = False
+        else:
+            print("Disabling CPU Boost")
+            os.system('powercfg.exe /SETDCVALUEINDEX ' + active_scheme + s1 + s2 + ' 000')
+            dc_boost_disabled = True
+except:
+    print("Error: Battery not detected")
+    time.wait(3)
+    exit
+
 
 #apply changes
 os.system('powercfg.exe -S SCHEME_CURRENT')
