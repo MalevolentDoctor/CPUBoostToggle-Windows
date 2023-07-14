@@ -17,5 +17,3 @@ if exist install_reqs.bat (
 )
 
 python cpuboosttoggle.py
-
-pause
