@@ -60,7 +60,7 @@ os.system('powercfg.exe -S SCHEME_CURRENT')
 
 # ---- change icon ---- #
 cd = os.getcwd()
-desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
+desktop = os.path.expanduser("~\\Desktop") 
 
 #get the icon name
 ac = "r"
@@ -77,4 +77,9 @@ shortcut.IconLocation = cd + "\\icons\\" + icon_name + ",0"
 shortcut.Save()
 
 #replace old shortcut
-os.replace("CPUBoostToggle.lnk", desktop + "\\CPUBoostToggle.lnk")
+try:
+    os.replace(cd + "\\CPUBoostToggle.lnk", desktop + "\\CPUBoostToggle.lnk")
+except:
+    print("Error: Desktop not found in expected location (C:/Users/[your username]/Desktop)")
+    time.sleep(3)
+    exit
