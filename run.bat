@@ -1,5 +1,5 @@
-if exists install_reqs.bat (
-	install_reqs.bat
+if exist install_reqs.bat (
+	CALL install_reqs.bat
 )
 
 python cpuboosttoggle.py
