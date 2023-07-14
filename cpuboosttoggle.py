@@ -60,7 +60,7 @@ os.system('powercfg.exe -S SCHEME_CURRENT')
 
 # ---- change icon ---- #
 cd = os.getcwd()
-desktop = os.path.expanduser("~\\Desktop") 
+desktop = os.path.expanduser("~\\Desktop")
 
 #get the icon name
 ac = "r"
