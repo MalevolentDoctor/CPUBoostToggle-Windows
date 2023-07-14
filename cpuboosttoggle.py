@@ -51,7 +51,7 @@ try:
             dc_boost_disabled = True
 except:
     print("Error: Battery not detected")
-    time.wait(3)
+    time.sleep(3)
     exit
 
 
