@@ -32,17 +32,21 @@ if battery_status.power_plugged:
     if ac_boost_disabled:
         print("Enabling CPU Boost")
         os.system('powercfg.exe /SETACVALUEINDEX ' + active_scheme + s1 + s2 + ' 002')
+        ac_boost_disabled = False
     else:
         print("Disabling CPU Boost")
         os.system('powercfg.exe /SETACVALUEINDEX ' + active_scheme + s1 + s2 + ' 000')
+        ac_boost_disabled = True
 else:
     print("ROG ALLY is running on battery")
     if dc_boost_disabled:
         print("Enabling CPU Boost")
         os.system('powercfg.exe /SETDCVALUEINDEX ' + active_scheme + s1 + s2 + ' 002')
+        dc_boost_disabled = False
     else:
         print("Disabling CPU Boost")
         os.system('powercfg.exe /SETDCVALUEINDEX ' + active_scheme + s1 + s2 + ' 000')
+        dc_boost_disabled = True
 
 #apply changes
 os.system('powercfg.exe -S SCHEME_CURRENT')
